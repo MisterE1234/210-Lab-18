@@ -71,9 +71,14 @@ int main()
     return 0;
 }
 
+
+//This function adds a new review at the beginning of the linked list
+//It takes a reference to the head pointer, a double for the rating, and a string for the comment as parameters
+//It returns nothing
 void addBegining(MovieReview*& head, double rating, string comment) {
     bool valid = false;
 
+    // Getting a valid rating from the user
     while (!valid) {
         cout << "Enter rating (1-5): ";
         cin >> rating;
@@ -85,10 +90,58 @@ void addBegining(MovieReview*& head, double rating, string comment) {
             valid = true;
         }
     }
-    
+
+    // Getting the comment from the user
     cout << "Enter comment: ";
     getline(cin, comment);
 
-    MovieReview* newReview = new MovieReview{rating, comment, head};
+    // Creating a new MovieReview node and adding it to the beginning of the list
+    MovieReview* newReview = new MovieReview;
+    newReview->rating = rating;
+    newReview->comment = comment;
+    newReview->next = head;
     head = newReview;
+
 }
+
+//This function adds a new review at the end of the linked list
+//It takes a reference to the head pointer, a double for the rating, and a string for the comment as parameters
+//It returns nothing
+void addEnd(MovieReview*& head, double rating, string comment) {
+    bool valid = false;
+
+    // Getting a valid rating from the user
+    while (!valid) {
+        cout << "Enter rating (1-5): ";
+        cin >> rating;
+        cin.ignore(1000, '\n');
+        if (cin.fail() || rating < 1 || rating > 5) {
+            cin.clear();
+            cout << "Invalid input. Please enter a rating between 1 and 5.\n";
+        } else {
+            valid = true;
+        }
+    }
+
+    // Getting the comment from the user
+    cout << "Enter comment: ";
+    getline(cin, comment);
+
+    // Creating a new MovieReview node
+    MovieReview* newReview = new MovieReview;
+    newReview->rating = rating;
+    newReview->comment = comment;
+    newReview->next = nullptr;
+
+    // If the list is empty, make the new review the head
+    if (head == nullptr) {
+        head = newReview;
+    } else {
+        // Otherwise, traverse to the end of the list and add the new review there
+        MovieReview* temp = head;
+        while (temp->next != nullptr) {
+            temp = temp->next;
+        }
+        temp->next = newReview;
+    }
+  }
