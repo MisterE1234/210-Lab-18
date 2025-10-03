@@ -41,14 +41,14 @@ int main()
         else if(cin.fail() || choice < 1 || choice > 2){
             cin.clear();
             cin.ignore(1000, '\n');
-            cout << "Invalid input. Please enter 1 or 2.\n";
+            cout << "Invalid input. Please enter 1 or 2.\n\n";
         }
         
     }
         
     // Getting the rating and comment from the user
     while (again == 'y' || again == 'Y') {
-        
+        cout << endl;
         if (choice == 1) {
             addBegining(head, rating, comment);
         } else if (choice == 2) {
@@ -145,3 +145,44 @@ void addEnd(MovieReview*& head, double rating, string comment) {
         temp->next = newReview;
     }
   }
+
+//This function displays all the reviews in the linked list and calculates the average rating
+//It takes the head pointer as a parameter
+//It returns nothing
+void displayList(MovieReview* head) {
+    
+    double totalRating = 0;
+    int count = 0;
+
+    // If the list is empty, display a message and return    
+    if (head == nullptr) {
+        cout << "No reviews to display.\n";
+        return;
+    }
+    
+    MovieReview* temp = head;
+
+    cout << "\nMovie Reviews:\n";
+    while (temp != nullptr) {
+        count++;
+        cout << "Rating #" << count << ": " << temp->rating << ", Comment: " << temp->comment << "\n";
+        
+        totalRating += temp->rating;
+        temp = temp->next;
+    }
+
+    double averageRating = totalRating / count;
+    cout << "Average Rating: " << averageRating << "\n";
+}
+
+//This function deletes the entire linked list to free memory
+//It takes a reference to the head pointer as a parameter
+//It returns nothing
+void deleteList(MovieReview*& head) {
+    MovieReview* temp;
+    while (head != nullptr) {
+        temp = head;
+        head = head->next;
+        delete temp;
+    }
+}
